@@ -1,17 +1,21 @@
-#!/usr/bin/env python
+''' 
+|  @file fauxmo_mqtt.py
+|  @brief A fauxmo example file that interacts with an mqtt server
+|  
+'''
 import subprocess, fauxmo, threading, logging, time
 import paho.mqtt.client as mqtt
 from debounce_handler import debounce_handler
 
 logging.basicConfig(level=logging.DEBUG)
 
-# ---------- Network constants -----------
+# Network constants
 ECHO_LIVINGROOM = "192.168.1.53"
 ECHO_KITCHEN  = "192.168.1.243"
 MQTT_HOST = "jarvis"
 MQTT_PORT = 1883
 
-# ---------- Device callback functions ----------
+# Device callback functions
 class light_handler(debounce_handler):
     """Publishes state to two different lighting MQTT topics
        depending on which Echo the request came from.

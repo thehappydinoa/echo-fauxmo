@@ -1,9 +1,10 @@
 ''' 
-|  @file wol-device-handler.py
+|  @file wol_device_handler.py
 |  @brief Wake-over-lan device handlers
 |  
 '''
-import fauxmo, fauxmo_basics, aquos, itach-device-handler, fmip, socket, logging, time, sys, os
+import fauxmo, fauxmo_basics, aquos, fmip, socket, logging, time, sys, os
+import itach_device_handler as itach
 from wakeonlan import wol
 
 logging.basicConfig(level=logging.DEBUG)

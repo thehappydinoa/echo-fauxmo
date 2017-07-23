@@ -1,9 +1,10 @@
 ''' 
-|  @file itach-device-handler.py
+|  @file itach_device_handler.py
 |  @brief iTach device handlers
 |  
 '''
 import fauxmo, fauxmo_basics, aquos, fmip, socket, logging, time, sys, os
+import wol_device_handler as itach
 from wakeonlan import wol
 
 logging.basicConfig(level=logging.DEBUG)
