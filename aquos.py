@@ -54,7 +54,7 @@ class aquos():
 		return True
 	
 	def set_tv_volume(level):
-		if (level <= 100 and level >= 0)
+		if (level <= 100 and level >= 0):
 			send_command("VOLM" + level + "   \r")
 		return True
 
@@ -62,14 +62,14 @@ class aquos():
 		send_command("IAVD" + input + "   \r")
 		return True
 		
-	def set_login(user,passwd)
+	def set_login(user,passwd):
 		if not login:
 			login = True
 			username = str(user)
 			password = str(passwd)
 		return True
 		
-	def set_ip(ip)
+	def set_ip(ip):
 		tv_ip = str(ip)
 		return True
 		
