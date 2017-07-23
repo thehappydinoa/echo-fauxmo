@@ -7,6 +7,7 @@ Originally Based on [echo](https://github.com/toddmedema/echo)
 ## Quick Start
 
 1. `git clone https://github.com/thehappydinoa/echo-fauxmo`
+2. `cd https://github.com/thehappydinoa/echo-fauxmo`
 3. `pip install -r requirements.txt`
 4. `python example-minimal.py`
 5. Tell Echo, "discover my devices"

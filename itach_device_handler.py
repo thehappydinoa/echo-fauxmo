@@ -9,36 +9,21 @@ from wakeonlan import wol
 
 logging.basicConfig(level=logging.DEBUG)
 
-device_ips = {'itach':'192.168.1.111',
-			  'tv':'192.168.1.12',
-			  'blueray':'192.168.1.27',
-			  'dvr':'192.168.1.100',
-			  'xbox':'192.168.1.4'}
-			  
-device_ports = {'itach':4998,
-				'xbox':5050}
 
-commands = {'tv_toggle':"sendir,1:1,1,38580,1,1,10,70,10,30,10,30,10,30,10,30,10,30,10,70,10,70,10,30,10,70,10,30,10,30,10,30,10,70,10,30,10,1765,10,70,10,30,10,30,10,30,10,30,10,70,10,30,10,30,10,70,10,30,10,70,10,70,10,70,10,30,10,70,10,1685,10,70,10,30,10,30,10,30,10,30,10,30,10,70,10,70,10,30,10,70,10,30,10,30,10,30,10,70,10,30,10,3800",
-			   'stero_toggle':"sendir,1:3,7,40064,1,1,96,23,49,23,25,23,49,23,25,23,49,23,25,23,25,23,25,23,25,23,25,23,25,23,49,23,49,23,25,23,25,908,97,23,49,23,25,23,49,23,25,23,49,23,25,23,25,23,25,23,25,23,25,23,25,23,49,23,49,23,25,23,25,908,97,23,49,23,25,23,49,23,25,23,49,23,25,23,25,23,25,23,25,23,25,23,25,23,49,23,49,23,25,23,25,908,97,23,49,23,25,23,49,23,25,23,49,23,25,23,25,23,25,23,25,23,25,23,25,23,49,23,49,23,25,23,25,908,97,23,49,23,25,23,49,23,25,23,49,23,25,23,25,23,25,23,25,23,25,23,25,23,49,23,49,23,25,23,25,908,97,23,49,23,25,23,49,23,25,23,49,23,25,23,25,23,25,23,25,23,25,23,25,23,49,23,49,23,25,23,25,4000",
-			   'blueray_toggle':"sendir,1:3,1,40192,1,1,97,23,49,23,25,23,49,23,25,23,49,23,25,23,25,23,25,23,49,23,25,23,49,23,49,23,25,23,49,23,25,23,25,23,25,23,49,23,49,23,49,529,96,23,49,23,25,23,49,23,25,23,49,23,25,23,25,23,25,23,49,23,25,23,49,23,49,23,25,23,49,23,25,23,25,23,25,23,49,23,49,23,49,528,96,23,49,23,25,23,49,23,25,23,49,23,25,23,25,23,25,23,49,23,25,23,49,23,49,23,25,23,49,23,25,23,25,23,25,23,49,23,49,23,49,553,97,23,49,23,25,23,49,23,25,23,49,23,25,23,25,23,25,23,49,23,25,23,49,23,49,23,25,23,49,23,25,23,25,23,25,23,49,23,49,23,49,554,97,23,49,23,25,23,49,23,25,23,49,23,25,23,25,23,25,23,49,23,25,23,49,23,49,23,25,23,49,23,25,23,25,23,25,23,49,23,49,23,49,554,97,23,49,23,25,23,49,23,25,23,49,23,25,23,25,23,25,23,49,23,25,23,49,23,49,23,25,23,49,23,25,23,25,23,25,23,49,23,49,23,49,554,97,23,49,23,25,23,49,23,25,23,49,23,25,23,25,23,25,23,49,23,25,23,49,23,49,23,25,23,49,23,25,23,25,23,25,23,49,23,49,23,49,4000",
-			   'dvr_toggle':"sendir,1:3,1,37764,1,1,340,170,19,85,19,170,19,85,19,170,19,85,19,85,19,85,19,85,19,85,19,85,19,85,19,85,19,85,19,170,19,170,19,85,19,1239,340,85,19,3331,340,85,19,3331,340,85,19,3700",
-			   'stereo_input_sat':"sendir,1:3,1,40192,1,1,97,23,49,23,49,23,25,23,25,23,25,23,25,23,25,23,25,23,25,23,25,23,25,23,49,23,49,23,25,23,49,898,96,23,49,23,49,23,25,23,25,23,25,23,25,23,25,23,25,23,25,23,25,23,25,23,49,23,49,23,25,23,49,888,96,23,49,23,49,23,25,23,25,23,25,23,25,23,25,23,25,23,25,23,25,23,25,23,49,23,49,23,25,23,49,921,97,23,49,23,49,23,25,23,25,23,25,23,25,23,25,23,25,23,25,23,25,23,25,23,49,23,49,23,25,23,49,921,97,23,49,23,49,23,25,23,25,23,25,23,25,23,25,23,25,23,25,23,25,23,25,23,49,23,49,23,25,23,49,921,97,23,49,23,49,23,25,23,25,23,25,23,25,23,25,23,25,23,25,23,25,23,25,23,49,23,49,23,25,23,49,921,97,23,49,23,49,23,25,23,25,23,25,23,25,23,25,23,25,23,25,23,25,23,25,23,49,23,49,23,25,23,49,4000",
-			   'stereo_input_tv':"sendir,1:3,1,40192,1,1,97,23,25,23,49,23,25,23,49,23,25,23,49,23,49,23,25,23,25,23,25,23,25,23,49,23,49,23,25,23,25,874,96,23,25,23,49,23,25,23,49,23,25,23,49,23,49,23,25,23,25,23,25,23,25,23,49,23,49,23,25,23,25,864,96,23,25,23,49,23,25,23,49,23,25,23,49,23,49,23,25,23,25,23,25,23,25,23,49,23,49,23,25,23,25,897,97,23,25,23,49,23,25,23,49,23,25,23,49,23,49,23,25,23,25,23,25,23,25,23,49,23,49,23,25,23,25,897,97,23,25,23,49,23,25,23,49,23,25,23,49,23,49,23,25,23,25,23,25,23,25,23,49,23,49,23,25,23,25,897,97,23,25,23,49,23,25,23,49,23,25,23,49,23,49,23,25,23,25,23,25,23,25,23,49,23,49,23,25,23,25,897,97,23,25,23,49,23,25,23,49,23,25,23,49,23,49,23,25,23,25,23,25,23,25,23,49,23,49,23,25,23,25,4000",
-			   'stereo_input_bd':"sendir,1:3,5,40192,1,1,97,23,25,23,49,23,49,23,25,23,49,23,25,23,25,23,25,23,25,23,25,23,25,23,49,23,25,23,25,23,25,23,49,23,25,23,49,23,25,23,25,628,96,23,25,23,49,23,49,23,25,23,49,23,25,23,25,23,25,23,25,23,25,23,25,23,49,23,25,23,25,23,25,23,49,23,25,23,49,23,25,23,25,623,96,23,25,23,49,23,49,23,25,23,49,23,25,23,25,23,25,23,25,23,25,23,25,23,49,23,25,23,25,23,25,23,49,23,25,23,49,23,25,23,25,660,97,23,25,23,49,23,49,23,25,23,49,23,25,23,25,23,25,23,25,23,25,23,25,23,49,23,25,23,25,23,25,23,49,23,25,23,49,23,25,23,25,660,97,23,25,23,49,23,49,23,25,23,49,23,25,23,25,23,25,23,25,23,25,23,25,23,49,23,25,23,25,23,25,23,49,23,25,23,49,23,25,23,25,660,97,23,25,23,49,23,49,23,25,23,49,23,25,23,25,23,25,23,25,23,25,23,25,23,49,23,25,23,25,23,25,23,49,23,25,23,49,23,25,23,25,4000"}			   
-	  
+
 
 class tv_handler(fauxmo_basics.debounce_handler):
 	starting_port = 51100
 	device_names = ["tv", "television"]
 		
 	def on(self, client_address, name):
-		if not(ping(device_ips['tv'])):
-			send_command('itach','tv_toggle')
+		if not(fauxmo_basics.ping(fauxmo_basics.device_ips['tv'])):
+			fauxmo_basics.send_command('itach','tv_toggle')
 		return True
 		
 	def off(self, client_address, name):
-		if (ping(device_ips['tv'])):
-			send_command('itach','tv_toggle')
+		if (fauxmo_basics.ping(fauxmo_basics.device_ips['tv'])):
+			fauxmo_basics.send_command('itach','tv_toggle')
 		return True
 		
 class stereo_handler(fauxmo_basics.debounce_handler):
@@ -46,32 +31,42 @@ class stereo_handler(fauxmo_basics.debounce_handler):
 	device_names = ["stereo"]
 
 	def act(self, client_address, state, name):
-		send_command('itach','stero_toggle')
-		send_command('itach','stereo_input_tv') # Temp change to SAT input
+		fauxmo_basics.send_command('itach','stero_toggle')
+		fauxmo_basics.send_command('itach','stereo_input_tv') # Temp change to SAT input
 		return True
 		
 class dvr_handler(fauxmo_basics.debounce_handler):
 	starting_port = 51300
 	device_names = ["dvr", "cable"]
-
-	def act(self, client_address, state, name):
-		send_command('itach','dvr_toggle')
+		
+	def on(self, client_address, name):
+		fauxmo_basics.send_command('itach','dvr_toggle')
+		if not(fauxmo_basics.ping(fauxmo_basics.device_ips['tv'])):
+			aquos.aquos.set_ip(fauxmo_basics.device_ips['tv'])
+			aquos.aquos.set_tv_input(1)
 		return True
+		
+	def off(self, client_address, name):
+		fauxmo_basics.send_command('itach','dvr_toggle')
+		return True	
 		
 class blueray_handler(fauxmo_basics.debounce_handler):
 	starting_port = 51400
 	device_names = ["blueray", "blueray player"]
 		
 	def on(self, client_address, name):
-		if not(ping(device_ips['blueray'])):
-			send_command('itach','blueray_toggle')
-			send_command('itach','stereo_input_bd')
+		if not(fauxmo_basics.ping(fauxmo_basics.device_ips['blueray'])):
+			fauxmo_basics.send_command('itach','blueray_toggle')
+			fauxmo_basics.send_command('itach','stereo_input_bd')
+		if not(fauxmo_basics.ping(fauxmo_basics.device_ips['tv'])):
+			aquos.aquos.set_ip(fauxmo_basics.device_ips['tv'])
+			aquos.aquos.set_tv_input(2)
 		return True
 		
 	def off(self, client_address, name):
-		if (ping(device_ips['blueray'])):
-			send_command('itach','blueray_toggle')
-			send_command('itach','stereo_input_sat')
+		if (fauxmo_basics.ping(fauxmo_basics.device_ips['blueray'])):
+			fauxmo_basics.send_command('itach','blueray_toggle')
+			fauxmo_basics.send_command('itach','stereo_input_sat')
 		return True
 
 if __name__ == "__main__":
@@ -82,7 +77,7 @@ if __name__ == "__main__":
 	u.init_socket()
 	p.add(u)
 
-	handler_list = [tv_handler,xbox_handler,stereo_handler,dvr_handler,blueray_handler,apple_tv_handler,laptop_handler,find_my_iphone_handler]
+	handler_list = [tv_handler,stereo_handler,dvr_handler,blueray_handler]
 	
 	for handler_index,handler in enumerate(handler_list):
 		handler = handler_list[handler_index]()

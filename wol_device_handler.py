@@ -26,7 +26,7 @@ icloud_password = ''
 
 
 class xbox_handler(fauxmo_basics.debounce_handler):
-	starting_port = 52000
+	starting_port = 52100
 	device_names = ["xbox"]
 
 	def act(self, client_address, state, name):
@@ -45,23 +45,23 @@ class xbox_handler(fauxmo_basics.debounce_handler):
 		return True
 		
 class bluetooth_handler(fauxmo_basics.debounce_handler):
-	starting_port = 52100
+	starting_port = 52200
 	device_names = ["bluetooth speaker"]
 
 	def act(self, client_address, state, name):
-		send_command('itach','stereo_input_tv')
+		fauxmo_basics.send_command('itach','stereo_input_tv')
 		return True
 		
 class apple_tv_handler(fauxmo_basics.debounce_handler):
-	starting_port = 52200
+	starting_port = 52300
 	device_names = ["apple tv"]
 
 	def act(self, client_address, state, name):
-		send_command('itach','stereo_input_sat')
+		fauxmo_basics.send_command('itach','stereo_input_sat')
 		return True
 		
 class laptop_handler(fauxmo_basics.debounce_handler):
-	starting_port = 52300
+	starting_port = 52400
 	device_names = ["laptop"]
 	
 	def act(self, client_address, state, name):
@@ -69,7 +69,7 @@ class laptop_handler(fauxmo_basics.debounce_handler):
 		logging.debug("Wake-over-lan magic packet sent to " + computer_mac_address)
 		
 class find_my_iphone_handler(fauxmo_basics.debounce_handler):
-	starting_port = 52400
+	starting_port = 52500
 	device_names = ["find my iPhone"]
 	
 	def act(self, client_address, state, name):
