@@ -1,6 +1,4 @@
-import datetime, time, base64, urllib2, json, getpass, logging
-
-logging.basicConfig(level=logging.DEBUG)
+import datetime, time, base64, urllib2, json, getpass
 
 def convert_coords(lat, longitude):
 	url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=%s,%s" % (lat, longitude)
@@ -15,7 +13,6 @@ def convert_coords(lat, longitude):
 		if e.code != 200:
 			return "HTTP Error: %s" % e.code
 		else:
-			logging.debug(e)
 			raise urllib2.HTTPError
 	formatted_address = json.loads(response.read())["results"][0]["formatted_address"]
 	return formatted_address.encode('ascii', 'ignore')
@@ -62,8 +59,6 @@ def FMIP(username, password):
 		auth_type = "UserIDGuest" 
 	while True:
 		i +=1
-		if i == 2:
-			logging.debug("Reprocessing iCloud response...")
 		url = 'https://fmipmobile.icloud.com/fmipservice/device/%s/initClient' % username
 		headers = {
 			'X-Apple-Realm-Support': '1.0',
@@ -85,9 +80,6 @@ def FMIP(username, password):
 			raise e
 		if i == 2: #loop twice / send request twice
 			break
-		logging.debug("Successfully iCloud authenticated")
-		logging.debug("Sent location beacon to " +  len(z["content"] + " devices")
-		logging.debug("Awaiting response from iCloud...")
 		#okay, FMD request has been sent, now lets wait a bit for iCloud to get results, and then do again, and then break
 		time.sleep(5)
 	return_string = ''
