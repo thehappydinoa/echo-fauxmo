@@ -10,8 +10,6 @@ from wakeonlan import wol
 logging.basicConfig(level=logging.DEBUG)
 
 
-
-
 class tv_handler(fauxmo_basics.debounce_handler):
 	starting_port = 51100
 	device_names = ["tv", "television"]
