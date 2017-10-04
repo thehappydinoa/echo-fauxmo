@@ -24,9 +24,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 """
 
-# For a complete discussion, see http://www.makermusings.com
-# TODO(semartin): investigate time.sleep usage in here...
-
 import email.utils
 import requests
 import select
@@ -34,7 +31,6 @@ import socket
 import struct
 import sys
 import time
-import urllib
 import uuid
 import logging
 
@@ -287,17 +283,17 @@ class upnp_broadcast_responder(object):
 			try:
 				self.ssock.bind(('',self.port))
 			except Exception, e:
-				dbg("WARNING: Failed to bind %s:%d: %s" , (self.ip,self.port,e))
+				dbg("WARNING: Failed to bind %s:%d: %s" % (self.ip,self.port,e))
 				ok = False
 
 			try:
 				self.ssock.setsockopt(socket.IPPROTO_IP,socket.IP_ADD_MEMBERSHIP,self.mreq)
 			except Exception, e:
-				dbg('WARNING: Failed to join multicast group:',e)
+				dbg('WARNING: Failed to join multicast group: %s' % e)
 				ok = False
 
 		except Exception, e:
-			dbg("Failed to initialize UPnP sockets:",e)
+			dbg("Failed to initialize UPnP sockets: %s" % e)
 			return False
 		if ok:
 			dbg("Listening for UPnP broadcasts")
@@ -394,12 +390,9 @@ if __name__ == "__main__":
 	# Create our FauxMo virtual switch devices
 	for one_faux in FAUXMOS:
 		switch = fauxmo(one_faux[0], u, p, None, 0, action_handler = one_faux[1])
-
 	dbg("Entering main loop\n")
-
 	while True:
 		try:
-			# Allow time for a ctrl-c to stop the process
 			p.poll(100)
 			time.sleep(0.1)
 		except Exception, e:
