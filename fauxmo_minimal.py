@@ -1,9 +1,3 @@
-''' 
-|  @file fauxmo_minimal.py
-|  @brief A fauxmo example file that prints the state issued to the device
-|  
-'''
-
 import fauxmo, logging, time
 from debounce_handler import debounce_handler
 
