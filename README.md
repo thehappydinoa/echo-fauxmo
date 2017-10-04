@@ -1,4 +1,4 @@
-# echo-fauxmo
+# [echo-fauxmo](https://thehappydinoa.github.io/echo-fauxmo/)
 
 For controlling local devices with the Amazon Echo. And for controlling iTach devices to send ir signals to devices. This replaces the Harmony Hub
 
