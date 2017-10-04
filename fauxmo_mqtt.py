@@ -1,9 +1,4 @@
-''' 
-|  @file fauxmo_mqtt.py
-|  @brief A fauxmo example file that interacts with an mqtt server
-|  
-'''
-import subprocess, fauxmo, threading, logging, time
+import fauxmo, threading, logging, time
 import paho.mqtt.client as mqtt
 from debounce_handler import debounce_handler
 
